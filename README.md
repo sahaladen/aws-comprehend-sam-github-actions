@@ -56,6 +56,11 @@ unzip aws-sam-cli-linux-x86_64.zip -d sam-installation
 sudo ./sam-installation/install
 ````
 
+## Gjør deg kjent med koden 
+
+* Se på Python-koden og se hvordan lambda-funksjonen er implementert
+* 
+
 ## Test bygg og lokal utvikling fra CodeSpaces med SAM
 
 ```shell
