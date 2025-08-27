@@ -158,15 +158,3 @@ På git push blir du bedt om brukernavn og passord. Bruk brukernavnet ditt, og A
 * Gjør kodeendringer på main branch i Lambdaen
 * Commit & push endringen
 * Se at endringene blir deployet av GitHub Actions workflow.
-* Hvis jobben har feilet tidligere på grunn av manglende secrets, og du har lagt de inn kan du velge din workflow, og så trykke knappen "re-run all jobs" i GitHub Actions UI.
-* 
-
-![Alt text](img/finished.png  "a title")
-
-* Test lambdafunksjonen med feks Curl (eller Postman om du har) 
-```shell
-export URL=<Hvordan finner du URL? Det er flere måter.....>
-curl -X POST $URL -H 'Content-Type: text/plain' -H 'cache-control: no-cache' -d 'The laptop would not boot up'
-```
-
-
