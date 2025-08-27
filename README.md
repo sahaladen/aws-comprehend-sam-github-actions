@@ -1,8 +1,8 @@
 # Sentimentanalyse med AWS Comprehend, Lambda og SAM
 
-* I denne øvelsen skal vi se hvordan vi kan bruke **GitHub Actions** til å sette opp en **CI/CD-pipeline** for en AWS Lambda-funksjon.
 * Vi skal også bruke AWS-tjenesten **Comprehend** til å analysere **sentiment** i tekst, det vil si om teksten uttrykker en positiv, negativ, nøytral eller blandet stemning.
 * Applikasjonen bygges og deployes med **AWS SAM**, både via GitHub Actions og direkte fra ditt Codespaces-miljø.
+* I denne øvelsen vil vi også se hvordan vi kan bruke **GitHub Actions** til å sette opp en **CI/CD-pipeline** for en AWS Lambda-funksjon.
 
 ## Beskrivelse
 
