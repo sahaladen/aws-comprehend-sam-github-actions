@@ -85,7 +85,7 @@ REPORT RequestId: d37e4849-b175-4fa6-aa4b-0031af6f41a0  Init Duration: 0.42 ms  
 * Du kan også bruke SAM til å deploye lambdafunksjonen rett fra CodeSpaces 
 * NB! Du må endre Stack name til noe unikt. Legg på ditt brukeranvn eller noe i slutten av navnet, for eksempel; ```--stack-name sam-sentiment-ola```
 
-Som du ser under, trenger vi IKKE bruke ```--guided``` flagget hvis vi oppgir de nødvendige parameterene på kommando-linjen
+Som dere ser trenger vi IKKE bruke ```--guided``` flagget hvis vi oppgir de nødvendige parameterene på kommando-linjen
 
 ```shell
   sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name sam-sentiment-<dine initialer eller noe>  --capabilities CAPABILITY_IAM --region eu-west-1      
@@ -99,18 +99,19 @@ Description         API Gateway endpoint URL for Prod stage for Sentiment functi
 Value               https://orpbuzoiik.execute-api.us-west-1.amazonaws.com/Prod/sentiment/      
 ```
 
-Du kan deretter bruke postman eller Curl til å teste ut tjenesten. Erstat URL med URL'en til lambdafunksjonen. Dere finner denne
-etter dete har gjort deploy 
+Du kan deretter bruke postman eller Curl til å teste ut tjenesten. Erstat URL med URL'en til lambdafunksjonen. 
 
 ```shell
 export URL=<URL du fikk vite ved deploy>
 curl -X POST $URL -H 'Content-Type: text/plain'  -H 'cache-control: no-cache' -d 'The laptop would not boot up when I got it.'
 ```
 
-Men... dette er jo ikke veldig "DevOps" og vil ikke fungere i et større team. Vi trenger både CI og CD for å kunne jobbe 
-effektivt sammen om denne funksjonen.
+## Bonus: Endre lambdaen til å bruke en annen Comprehend-tjeneste
 
-## GitHub Actions
+AWS Comprehend har en lang rekke funksjoner utover sentimentanalyse, se på https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/comprehend.html
+og finn inspirasjon til å endre Lambdafunksjonen så den gjør noe annet. 
+
+## Bonus: GitHub Actions
 
 Vi skal nå lage en workflow eller pipeline som ved hver eneste commit til main branch i github bygger og deployer 
 en ny version av lambdafunksjonen.
