@@ -25,13 +25,23 @@ Du må start med å lage en fork av dette repoet til din egen GitHub konto.
 
 ### Installer AWS CLI 
 
+```
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+```
 
 ### Installer SAM
+
+```
+wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
+unzip aws-sam-cli-linux-x86_64.zip -d sam-installation
+sudo ./sam-installation/install
+````
 
 ## Test bygg og lokal utvikling fra CodeSpaces med SAM
 
 ```shell
-cd 02-CD-AWS-lamda-sls
 cd sentiment-demo/
 sam build --use-container
 ```
