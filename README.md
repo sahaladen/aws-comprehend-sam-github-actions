@@ -1,18 +1,17 @@
 # Sentimentanalyse med AWS Comprehend, Lambda og SAM
 
-* I denne øvingen skal vi se på Github actions og hvordan vi kan sette opp en CD pipeline for en AWS Lambdafunksjon. 
-* Vi skal også  bruke AWS tjenesten "Comprehend" for å finne "stemningen" (Sentiment) i en tekst- og om den er negativt eller positivt 
-ladet. 
-* Deployment og bygg skal gjøres med verktøyet "AWS SAM", både i pipeline med GitHub actions, men også fra dit CodeSpaces miljø
+* I denne øvelsen skal vi se hvordan vi kan bruke **GitHub Actions** til å sette opp en **CI/CD-pipeline** for en AWS Lambda-funksjon.
+* Vi skal også bruke AWS-tjenesten **Comprehend** til å analysere **sentiment** i tekst, det vil si om teksten uttrykker en positiv, negativ, nøytral eller blandet stemning.
+* Applikasjonen bygges og deployes med **AWS SAM**, både via GitHub Actions og direkte fra ditt Codespaces-miljø.
 
-## Beskrivelse 
+## Beskrivelse
 
-Denne øvingen bruker fire AWS tjenestester 
+I øvelsen bruker vi fire sentrale AWS-tjenester:
 
-* AWS LAMBDA - Serverless Compute. Tjenesten kjører en enkelt funksjon og avslutter. Du Betaler for antall millisekunder koden kjører. Du velger språk
-* API GATEWAY - Gir AWS Lambda et HTTP grensesnitt ut mot verden.Støtter autentisering, caching, throttling, rate limiting osv.
-* AWS SAM - Verktøy for å lage,deploye og vedlikeholde applikasjoner basert på Serverless teknologi
-* API COMPREHEND- AWS tjeneste for tekstanalyse. Kan finne ut av om sentimentet eller “stemningen” i en tekst er god eller dårlig.
+* **AWS Lambda** – Serverless compute. Kjører en funksjon på forespørsel og stopper når den er ferdig. Du betaler kun for kjøretiden (millisekunder).
+* **Amazon API Gateway** – Gir Lambda et HTTP-grensesnitt mot omverdenen. Støtter autentisering, caching, throttling og rate limiting.
+* **AWS SAM (Serverless Application Model)** – Verktøy for å definere, bygge og deploye serverless-applikasjoner på en enkel måte.
+* **Amazon Comprehend** – Tjeneste for naturlig språkprosessering. I denne øvelsen bruker vi funksjonen for **sentimentanalyse** til å vurdere om en tekst er positiv, negativ, nøytral eller blandet.
 
 ## Lag en fork
 
@@ -31,8 +30,7 @@ Du må start med å lage en fork av dette repoet til din egen GitHub konto.
 ## Installer nødvendig programvare i ditt CodeSpaces miljø 
 
 * Fra din fork av dette repositoryet, starter du CodeSpaces. Keyboard shortcut er "." 
-* Åpne et terminalvindu
-
+* Åpne et terminalvindu, 
 
 ### Installer AWS CLI 
 
@@ -55,11 +53,6 @@ wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-lin
 unzip aws-sam-cli-linux-x86_64.zip -d sam-installation
 sudo ./sam-installation/install
 ````
-
-## Gjør deg kjent med koden 
-
-* Se på Python-koden og se hvordan lambda-funksjonen er implementert
-* 
 
 ## Test bygg og lokal utvikling fra CodeSpaces med SAM
 
@@ -85,17 +78,22 @@ REPORT RequestId: d37e4849-b175-4fa6-aa4b-0031af6f41a0  Init Duration: 0.42 ms  
 * Ta en ekstra kikk på event.json. Dette er objektet AWS Lambda får av tjenesten API Gateway .
 * Forsøke å endre teksten i "Body" delen av event.json - klarer å å endre sentimentet til positivt ?
 
+## Gjør APIet mer brukervennlig
+
+* Se på Python-koden og se hvordan lambda-funksjonen er implementert
+* APIet er ikke veldig brukervennlig. Koden bare sender responsen fra AWS Comprehend videre til klienten.
+* Endre responsen etter eget ønske
+  
 ## Deploy med SAM fra CodeSpaces
 
 * Du kan også bruke SAM til å deploye lambdafunksjonen rett fra CodeSpaces 
-* NB! Du må endre Stack name til noe unikt. Legg på ditt brukeranvn eller noe i slutten av navnet, for eksempel; ```--stack-name sam-sentiment-ola```
+* NB! Du må endre Stack name til noe unikt. Legg på ditt navn, for eksempel; ```--stack-name sam-sentiment-ola```
 
 Som dere ser trenger vi IKKE bruke ```--guided``` flagget hvis vi oppgir de nødvendige parameterene på kommando-linjen
 
 ```shell
   sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name sam-sentiment-<dine initialer eller noe>  --capabilities CAPABILITY_IAM --region eu-west-1      
  ```
-
 Når jobben er ferdig, vil du blant annet se hva URL'en til lambdafunksjonen ble. Let etter output som ser slikt ut; 
 
 ```text
@@ -104,26 +102,26 @@ Description         API Gateway endpoint URL for Prod stage for Sentiment functi
 Value               https://orpbuzoiik.execute-api.us-west-1.amazonaws.com/Prod/sentiment/      
 ```
 
-Du kan deretter bruke postman eller Curl til å teste ut tjenesten. Erstat URL med URL'en til lambdafunksjonen. 
+Du kan nå bruke postman eller Curl til å teste ut tjenesten. Erstat URL med URL'en til lambdafunksjonen. 
 
 ```shell
 export URL=<URL du fikk vite ved deploy>
 curl -X POST $URL -H 'Content-Type: text/plain'  -H 'cache-control: no-cache' -d 'The laptop would not boot up when I got it.'
 ```
 
-## Bonus: Endre lambdaen til å bruke en annen Comprehend-tjeneste
+## Bonusoppgave: Endre lambdaen til å bruke en annen Comprehend-tjeneste
 
 AWS Comprehend har en lang rekke funksjoner utover sentimentanalyse, se på https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/comprehend.html
-og finn inspirasjon til å endre Lambdafunksjonen så den gjør noe annet. 
+og finn inspirasjon til å endre Lambdafunksjonen så den gjør noe annet en sentimentanalyse
 
-## Bonus: GitHub Actions
+## Bonusoppgave: GitHub Actions
 
-Vi skal nå lage en workflow eller pipeline som ved hver eneste commit til main branch i github bygger og deployer 
-en ny version av lambdafunksjonen.
+Leg en Github actions workflo som bygger funksjonen ved en push til main branch.
 
 * Lag en ny mappe i rotkatalogen til repositoriet du klonet som heter .github/workflows
-* Kopier denne koden inn i  ```.github/workflows/``` katalogen, og kall den for eksempel sam-deploy.yml eller noe tilsvarende. Du må endre parameter ```--stack-name``` i  ```sam deploy``` kommandoen. 
-
+* Kopier denne koden inn i  ```.github/workflows/``` katalogen, og kall den for eksempel sam-deploy.yml eller noe tilsvarende.
+* NB! Bruk samme verdi i "stack name" som i den tidligere `sam deploy` kommandoen  
+  
 ```yaml
 on:
   push:
