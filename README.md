@@ -31,14 +31,14 @@ Du må start med å lage en fork av dette repoet til din egen GitHub konto.
 * Velg "Coee Spaces" og "New repository secret
 * Legg inn verdier for både AWS_ACCESS_KEY_ID og AWS_SECRET_ACCESS_KEY
 
-## Installer nødvendig programvare i ditt CodeSpaces miljø 
-
+## Start et Codespace & Installer nødvendig programvare 
 * Fra din fork av dette repositoryet, starter du CodeSpaces. Keyboard shortcut er "."
-* Alternativt, velg den grønne "Code"
-* Fra ditt mnye CodeSpace - Åpne et terminalvindu, og velg "Continue working in GitHub Codespaces"
+* Alternativt, velg den grønne "Code", "Velg Codespaces" og "Create codespace from main"
+* Fra ditt mnye CodeSpace - Åpne et **terminalvindu**, og velg "Continue working in GitHub Codespaces"
   
-
 ### Installer AWS CLI 
+
+I terminalen kjør følgende kommandoer
 
 ```
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -62,6 +62,11 @@ sudo ./sam-installation/install
 
 ## Test bygg og lokal utvikling fra CodeSpaces med SAM
 
+* Ta en kikk på koden som ligger i mappen "sentiment demo". Dette er en Lambda som tar imot en HTTP request - og som
+sender en tekst videre til tjenesten AWS Comprehend for sentimentanalyse.
+
+Gå til mappen og bygg lambdaen / SAM prosjektet.
+
 ```shell
 cd sentiment-demo/
 sam build --use-container
@@ -75,7 +80,8 @@ sam local invoke -e event.json
 
 Event.json filen inneholder en request, nøyaktig slik API Gateway sender den til "handler" metoden/funksjonen. 
 
-Du skal få en respons omtrent som denne 
+Du skal få en respons omtrent som denne, legg merke til at både _Negative_,_Positive_ og _Neutral_ oppgis med probabilitet. 
+
 ```
 {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": "{\"sentiment \": \"{\\\"Sentiment\\\": \\\"NEGATIVE\\\", \\\"SentimentScore\\\": {\\\"Positive\\\": 0.00023614335805177689, \\\"Negative\\\": 0.9974453449249268, \\\"Neutral\\\": 0.00039782875683158636, \\\"Mixed\\\": 0.0019206495489925146}, \\\"ResponseMetadata\\\": {\\\"RequestId\\\": \\\"c3367a61-ee05-4071-82d3-e3aed344f9af\\\", \\\"HTTPStatusCode\\\": 200, \\\"HTTPHeaders\\\": {\\\"x-amzn-requestid\\\": \\\"c3367a61-ee05-4071-82d3-e3aed344f9af\\\", \\\"content-type\\\": \\\"application/x-amz-json-1.1\\\", \\\"content-length\\\": \\\"168\\\", \\\"date\\\": \\\"Mon, 18 Apr 2022 12:00:06 GMT\\\"}, \\\"RetryAttempts\\\": 0}}\"}"}END RequestId: d37e4849-b175-4fa6-aa4b-0031af6f41a0
 REPORT RequestId: d37e4849-b175-4fa6-aa4b-0031af6f41a0  Init Duration: 0.42 ms  Duration: 1674.95 ms    Billed Duration: 1675 ms        Memory Size: 128 MB     Max Memory Used: 128 MB
@@ -83,12 +89,6 @@ REPORT RequestId: d37e4849-b175-4fa6-aa4b-0031af6f41a0  Init Duration: 0.42 ms  
 
 * Ta en ekstra kikk på event.json. Dette er objektet AWS Lambda får av tjenesten API Gateway .
 * Forsøke å endre teksten i "Body" delen av event.json - klarer å å endre sentimentet til positivt ?
-
-## Gjør APIet mer brukervennlig
-
-* Se på Python-koden og se hvordan lambda-funksjonen er implementert
-* APIet er ikke veldig brukervennlig. Koden bare sender responsen fra AWS Comprehend videre til klienten.
-* Endre responsen etter eget ønske
   
 ## Deploy med SAM fra CodeSpaces
 
@@ -98,8 +98,11 @@ REPORT RequestId: d37e4849-b175-4fa6-aa4b-0031af6f41a0  Init Duration: 0.42 ms  
 Som dere ser trenger vi IKKE bruke ```--guided``` flagget hvis vi oppgir de nødvendige parameterene på kommando-linjen
 
 ```shell
-  sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name sam-sentiment-<dine initialer eller noe>  --capabilities CAPABILITY_IAM --region eu-west-1      
+  sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name sam-sentiment-<dine initialer eller noe>  --resolve-s3 --capabilities CAPABILITY_IAM --region eu-west-1      
  ```
+
+NB. Hvis deploy feiler, av en eller annen årsak. Kan det hende du må gå til tjenesten "CloudFormation" og slette stacken som oppga i deploy-kommandoen. Hvis denne er i en tilstand "ROLLBACK_FAILED" så er det eneste alternativet å slette den.
+
 Når jobben er ferdig, vil du blant annet se hva URL'en til lambdafunksjonen ble. Let etter output som ser slikt ut; 
 
 ```text
@@ -111,10 +114,16 @@ Value               https://orpbuzoiik.execute-api.us-west-1.amazonaws.com/Prod/
 Du kan nå bruke postman eller Curl til å teste ut tjenesten. Erstat URL med URL'en til lambdafunksjonen. 
 
 ```shell
-export URL=<URL du fikk vite ved deploy>
+export URL=<URL fra "Value" i output >
 curl -X POST $URL -H 'Content-Type: text/plain'  -H 'cache-control: no-cache' -d 'The laptop would not boot up when I got it.'
 ```
 
+## Bonus: Gjør APIet mer brukervennlig
+
+* Se på Python-koden og se hvordan lambda-funksjonen er implementert
+* APIet er ikke veldig brukervennlig. Koden bare sender responsen fra AWS Comprehend videre til klienten.
+* Endre responsen etter eget ønske
+  
 ## Bonusoppgave: Endre lambdaen til å bruke en annen Comprehend-tjeneste
 
 AWS Comprehend har en lang rekke funksjoner utover sentimentanalyse, se på https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/comprehend.html
@@ -124,10 +133,13 @@ og finn inspirasjon til å endre Lambdafunksjonen så den gjør noe annet en sen
 
 Leg en Github actions workflo som bygger funksjonen ved en push til main branch.
 
+Du må først legge inn Access Key ID og Secret access key i repository'et sitt "Secrets and vatiables" under settings. 
+Du har tidligere lagt inn disse under "Codespaces" nå må de legges til under "Acrtions"
+
 * Lag en ny mappe i rotkatalogen til repositoriet du klonet som heter .github/workflows
 * Kopier denne koden inn i  ```.github/workflows/``` katalogen, og kall den for eksempel sam-deploy.yml eller noe tilsvarende.
 * NB! Bruk samme verdi i "stack name" som i den tidligere `sam deploy` kommandoen  
-  
+
 ```yaml
 on:
   push:
