@@ -1,9 +1,8 @@
-# Sentimentanalyse med AWS Comprehend, Lambda og SAM. Pipeline med GitHub Actions
+# Sentimentanalyse med AWS Comprehend, Lambda og SAM
 
 * I denne øvingen skal vi se på Github actions og hvordan vi kan sette opp en CD pipeline for en AWS Lambdafunksjon. 
 * Vi skal også  bruke AWS tjenesten "Comprehend" for å finne "stemningen" (Sentiment) i en tekst- og om den er negativt eller positivt 
 ladet. 
-
 * Deployment og bygg skal gjøres med verktøyet "AWS SAM", både i pipeline med GitHub actions, men også fra dit CodeSpaces miljø
 
 ## Beskrivelse 
@@ -21,7 +20,19 @@ Du må start med å lage en fork av dette repoet til din egen GitHub konto.
 
 ![Alt text](img/fork.png  "a title")
 
-## Installer nødvendig programvare i ditt codespaces miljø 
+## Lag AWS Credentials 
+
+* Følg veiledningen her for å lage Access Key og Secret Access Key  - https://github.com/glennbechdevops/aws-iam-accesskeys
+* Sett verdiene som CodeSpaces/Repository secrets
+
+<img width="2652" height="1186" alt="image" src="https://github.com/user-attachments/assets/e5eb3cc1-8310-4515-b0f8-54acbd6b2db9" />
+
+
+## Installer nødvendig programvare i ditt CodeSpaces miljø 
+
+* Fra din fork av dette repositoryet, starter du CodeSpaces. Keyboard shortcut er "." 
+* Åpne et terminalvindu
+
 
 ### Installer AWS CLI 
 
