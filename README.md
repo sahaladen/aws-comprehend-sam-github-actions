@@ -33,8 +33,10 @@ Du må start med å lage en fork av dette repoet til din egen GitHub konto.
 
 ## Installer nødvendig programvare i ditt CodeSpaces miljø 
 
-* Fra din fork av dette repositoryet, starter du CodeSpaces. Keyboard shortcut er "." 
-* Åpne et terminalvindu, 
+* Fra din fork av dette repositoryet, starter du CodeSpaces. Keyboard shortcut er "."
+* Alternativt, velg den grønne "Code"
+* Fra ditt mnye CodeSpace - Åpne et terminalvindu, og velg "Continue working in GitHub Codespaces"
+  
 
 ### Installer AWS CLI 
 
