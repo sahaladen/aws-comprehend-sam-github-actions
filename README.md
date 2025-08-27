@@ -42,6 +42,12 @@ unzip awscliv2.zip
 sudo ./aws/install
 ```
 
+Test at CLI og Akesessnøkler er riktig satt opp ved å kjøre 
+
+```
+aws s3 ls
+```
+
 ### Installer SAM
 
 ```
