@@ -4,12 +4,10 @@
 Vi skal bruke AWS tjenesten "Comprehend" for å finne "stemningen" (Sentiment) i en tekst- og om den er negativt eller positivt 
 ladet. 
 
-* Deployment og bygg skal gjøres med verktøyet "AWS SAM", både i pipeline med GitHub actions, men også for fra et Cloud9
-miljø.
-
+* Deployment og bygg skal gjøres med verktøyet "AWS SAM", både i pipeline med GitHub actions, men også fra dit CodeSpaces miljø
 ## Trouble-shooting 
 
-Du kan oppleve at du går tom for disk i cloud9 miljøet når du kjører SAM operasjoner. Du må da fjerne docker images.  
+Du kan oppleve at du går tom for disk i CodeSpaces miljøet når du kjører SAM operasjoner. Du må da fjerne docker images.  
 
 ```shell
 docker images ls
@@ -45,7 +43,7 @@ Du må start med å lage en fork av dette repoet til din egen GitHub konto.
 
 * URL for innlogging er https://244530008913.signin.aws.amazon.com/console
 * Logg på med brukernavn og passord gitt i klassrommet
-* Gå til tjenesten Cloud9 (Du nå søke på Cloud9 uten mellomrom i søket) 
+* Gå til tjenesten CodeSpaces (Du nå søke på CodeSpaces uten mellomrom i søket) 
 * Velg "Open IDE" 
 * Hvis du ikke ser ditt miljø, kan det hende du har valgt feil region. Hvilken region du skal bruke vil bli oppgitt i klasserommet.
 
@@ -76,8 +74,8 @@ ditt eget Github brukernavn :-)
 OBS Når du gjør ```git push``` senere og du skal autentisere deg, skal du bruke GitHub Access token når du blir bedt om passord, 
 så du trenger å ta vare på dette et sted. 
 
-## Konfigurer Git i Cloud9 
-Følgende steg trenger du bare gjøre en gang i Cloud9 miljøet ditt. Du kan hoppe over hele steget hvis du har gjort det tidligere. 
+## Konfigurer Git i CodeSpaces 
+Følgende steg trenger du bare gjøre en gang i CodeSpaces miljøet ditt. Du kan hoppe over hele steget hvis du har gjort det tidligere. 
 For å slippe å autentisere seg hele tiden kan man få git til å cache nøkler i et valgfritt antall sekunder på denne måten.
  
 ```shell
@@ -157,7 +155,7 @@ effektivt sammen om denne funksjonen.
 Vi skal nå lage en workflow eller pipeline som ved hver eneste commit til main branch i github bygger og deployer 
 en ny version av lambdafunksjonen.
 
-* NB! For å få se filer som er "skjulte" i AWS Cloud9 må du velge "show hidden files" i fil-utforskeren.
+* NB! For å få se filer som er "skjulte" i AWS CodeSpaces må du velge "show hidden files" i fil-utforskeren.
   (trykk på "tannhjulet")
 * 
 ![Alt text](img/hiddenfiles.png  "a title")
@@ -192,7 +190,7 @@ jobs:
       - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name sam-sentiment-<studentid>  --s3-bucket lambda-bucket-grb  --capabilities CAPABILITY_IAM --region eu-west-1
 ```
 
-For å pushe endringen til ditt repo må du stå i riktig katalog i Cloud9 terminalen 
+For å pushe endringen til ditt repo må du stå i riktig katalog i CodeSpaces terminalen 
 ```bash
 cd ~/environment/02-CD-AWS-lamda-sls
 git add .github/
