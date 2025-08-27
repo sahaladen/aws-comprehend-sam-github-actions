@@ -1,26 +1,10 @@
-# GitHub actions, AWS Lambda med API Gateway og AWS SAM
+# Sentimentanalyse med AWS Comprehend, Lambda og SAM. Pipeline med GitHub Actions
 
 * I denne øvingen skal vi se på Github actions og hvordan vi kan sette opp en CD pipeline for en AWS Lambdafunksjon. 
-Vi skal bruke AWS tjenesten "Comprehend" for å finne "stemningen" (Sentiment) i en tekst- og om den er negativt eller positivt 
+* Vi skal også  bruke AWS tjenesten "Comprehend" for å finne "stemningen" (Sentiment) i en tekst- og om den er negativt eller positivt 
 ladet. 
 
 * Deployment og bygg skal gjøres med verktøyet "AWS SAM", både i pipeline med GitHub actions, men også fra dit CodeSpaces miljø
-## Trouble-shooting 
-
-Du kan oppleve at du går tom for disk i CodeSpaces miljøet når du kjører SAM operasjoner. Du må da fjerne docker images.  
-
-```shell
-docker images ls
-```
-
-Se etter Image ID, og slett med 
-
-```shell
-docker image rm  <Image ID>
-```
-
-Slett gjerne all images, og forsøk å kjøre SAM kommandoen på nytt 
-
 
 ## Beskrivelse 
 
@@ -37,71 +21,20 @@ Du må start med å lage en fork av dette repoet til din egen GitHub konto.
 
 ![Alt text](img/fork.png  "a title")
 
-## Logg i Cloud 9 miljøet ditt 
+## Installer nødvendig programvare i ditt codespaces miljø 
 
-![Alt text](img/aws_login.png  "a title")
+### Installer AWS CLI 
 
-* URL for innlogging er https://244530008913.signin.aws.amazon.com/console
-* Logg på med brukernavn og passord gitt i klassrommet
-* Gå til tjenesten CodeSpaces (Du nå søke på CodeSpaces uten mellomrom i søket) 
-* Velg "Open IDE" 
-* Hvis du ikke ser ditt miljø, kan det hende du har valgt feil region. Hvilken region du skal bruke vil bli oppgitt i klasserommet.
 
-### Lag et Access Token for GitHub
+### Installer SAM
 
-* Når du skal autentisere deg mot din GitHub konto fra Cloud 9 trenger du et access token.  Gå til  https://github.com/settings/tokens og lag et nytt.
-* NB. Ta vare på tokenet et sted, du trenger dette senere når du skal gjøre ```git push```
-
-![Alt text](img/generate.png  "a title")
-
-Access token må ha "repo" tillatelser, og "workflow" tillatelser.
-
-![Alt text](img/new_token.png  "a title")
-
-### Lage en klone av din Fork (av dette repoet) inn i ditt Cloud 9 miljø
-
-Fra Terminal i Cloud 9. Klone repository med HTTPS URL. Eksempel ; 
-
-```
-git clone https://github.com/≤github bruker>/02-CD-AWS-lamda-sls
-```
-
-Får du denne feilmeldingen ```bash: /02-CD-AWS-lamda-sls: Permission denied``` - så glemte du å bytte ut <github bruker> med 
-ditt eget Github brukernavn :-) 
-
-![Alt text](img/clone.png  "a title")
-
-OBS Når du gjør ```git push``` senere og du skal autentisere deg, skal du bruke GitHub Access token når du blir bedt om passord, 
-så du trenger å ta vare på dette et sted. 
-
-## Konfigurer Git i CodeSpaces 
-Følgende steg trenger du bare gjøre en gang i CodeSpaces miljøet ditt. Du kan hoppe over hele steget hvis du har gjort det tidligere. 
-For å slippe å autentisere seg hele tiden kan man få git til å cache nøkler i et valgfritt antall sekunder på denne måten.
- 
-```shell
-git config --global credential.helper "cache --timeout=86400"
-```
-
-Konfigurer også brukernavnet og eposten din for GitHub CLI. Da slipepr du advarsler i terminalen
-når du gjør commit senere.
-
-````shell
-git config --global user.name <github brukernavn>
-git config --global user.email <email for github bruker>
-
-````
-
-## Test bygg og lokal utvikling fra Cloud 9 med SAM
-
-I cloud 9, åpne en Terminal
+## Test bygg og lokal utvikling fra CodeSpaces med SAM
 
 ```shell
 cd 02-CD-AWS-lamda-sls
 cd sentiment-demo/
 sam build --use-container
 ```
-
-## Test 
 
 Du kan teste funksjonen uten å deploye den til AWS ved å kjøre kommandoen 
 
@@ -120,9 +53,9 @@ REPORT RequestId: d37e4849-b175-4fa6-aa4b-0031af6f41a0  Init Duration: 0.42 ms  
 * Ta en ekstra kikk på event.json. Dette er objektet AWS Lambda får av tjenesten API Gateway .
 * Forsøke å endre teksten i "Body" delen av event.json - klarer å å endre sentimentet til positivt ?
 
-## Deploy med SAM fra Cloud 9
+## Deploy med SAM fra CodeSpaces
 
-* Du kan også bruke SAM til å deploye lambdafunksjonen rett fra Cloud 9 
+* Du kan også bruke SAM til å deploye lambdafunksjonen rett fra CodeSpaces 
 * NB! Du må endre Stack name til noe unikt. Legg på ditt brukeranvn eller noe i slutten av navnet, for eksempel; ```--stack-name sam-sentiment-ola```
 
 Som du ser under, trenger vi IKKE bruke ```--guided``` flagget hvis vi oppgir de nødvendige parameterene på kommando-linjen
@@ -162,7 +95,7 @@ en ny version av lambdafunksjonen.
 
 * Lag en ny mappe i rotkatalogen til repositoriet du klonet som heter .github/workflows
 * Kopier denne koden inn i  ```.github/workflows/``` katalogen, og kall den for eksempel sam-deploy.yml eller noe tilsvarende. Du må endre parameter ```--stack-name``` i  ```sam deploy``` kommandoen. 
-* Bruk samme stack navn som du brukte når du deployet direkte fra cloud 9.
+* Bruk samme stack navn som du brukte når du deployet direkte fra CodeSpaces.
 
 ```yaml
 on:
@@ -241,6 +174,4 @@ export URL=<Hvordan finner du URL? Det er flere måter.....>
 curl -X POST $URL -H 'Content-Type: text/plain' -H 'cache-control: no-cache' -d 'The laptop would not boot up'
 ```
 
-## Bonusoppgave 
 
-* Du kan lage en applikasjon fra scratch ved å bruke "sam init" - forsøk gjerne å lage en ny sam app. Dt kan være lurt å velge Python eller Javascript som språk, siden disse er tolkede språk og ikke trenger  kompilering
