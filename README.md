@@ -115,14 +115,8 @@ effektivt sammen om denne funksjonen.
 Vi skal nå lage en workflow eller pipeline som ved hver eneste commit til main branch i github bygger og deployer 
 en ny version av lambdafunksjonen.
 
-* NB! For å få se filer som er "skjulte" i AWS CodeSpaces må du velge "show hidden files" i fil-utforskeren.
-  (trykk på "tannhjulet")
-* 
-![Alt text](img/hiddenfiles.png  "a title")
-
 * Lag en ny mappe i rotkatalogen til repositoriet du klonet som heter .github/workflows
 * Kopier denne koden inn i  ```.github/workflows/``` katalogen, og kall den for eksempel sam-deploy.yml eller noe tilsvarende. Du må endre parameter ```--stack-name``` i  ```sam deploy``` kommandoen. 
-* Bruk samme stack navn som du brukte når du deployet direkte fra CodeSpaces.
 
 ```yaml
 on:
@@ -150,35 +144,9 @@ jobs:
       - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name sam-sentiment-<studentid>  --s3-bucket lambda-bucket-grb  --capabilities CAPABILITY_IAM --region eu-west-1
 ```
 
-For å pushe endringen til ditt repo må du stå i riktig katalog i CodeSpaces terminalen 
-```bash
-cd ~/environment/02-CD-AWS-lamda-sls
-git add .github/
-git commit -m"added workflow file" 
-git push 
-```
+Commit og push denne filen til ditt repositoru.
 
 På git push blir du bedt om brukernavn og passord. Bruk brukernavnet ditt, og Access Token du laget tidligere som passord.
-
-## Hemmeligheter
-
-GitHub actions trenger våre API nøkler for å kunne deploye kode i AWS på våre vegne. 
-
-![Alt text](img/topsecret.png  "a title")
-
-Vi skal _absolutt ikke_ sjekke inn API nøkler og hemmeligheter inn i koden. GitHub har heldigvis en mekanisme for å lagre hemmeligheter utenfor koden. 
-* I Repository settings og under menyvalget "secrets" og "Action secrets"  kan vi legge inn verdier og bruke de fra workflowene våre ved å referere de ved navn for eksempel på denne måten
-``` aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}```
-
-Lag to repository secrets. 
-
-* AWS_ACCESS_KEY_ID 
-* AWS_SECRET_ACCESS_KEY
-
-* Du må gå til tjenesten IAM i AWS og fine din egen IAM bruker. 
-* Velg "Security credentials" tabben
-* Velg "Create Access Key"
-* Ta vare på verdiene, last de gjerne ned som en fil
 
 ## Sjekk at pipeline virker
 
