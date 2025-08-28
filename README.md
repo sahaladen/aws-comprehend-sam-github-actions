@@ -29,7 +29,8 @@ Du må start med å lage en fork av dette repoet til din egen GitHub konto.
 
 * I din fork, velg "settings" og "Secrets and Variables"
 * Velg "Coee Spaces" og "New repository secret
-* Legg inn verdier for både AWS_ACCESS_KEY_ID og AWS_SECRET_ACCESS_KEY
+* Du skal lage to repository secrets med navn: AWS_ACCESS_KEY_ID og AWS_SECRET_ACCESS_KEY
+* Legg inn verdier du fikk oppgitt når du laget nøklene, eller fra filen du lastet ned 
 
 ## Start et Codespace & Installer nødvendig programvare 
 * Fra din fork av dette repositoryet, starter du CodeSpaces. Keyboard shortcut er "."
