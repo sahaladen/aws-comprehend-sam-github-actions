@@ -29,7 +29,7 @@ Du må start med å lage en fork av dette repoet til din egen GitHub konto.
 <img width="2652" height="1186" alt="image" src="https://github.com/user-attachments/assets/e5eb3cc1-8310-4515-b0f8-54acbd6b2db9" />
 
 * I din fork, velg "settings" og "Secrets and Variables"
-* Velg "Coee Spaces" og "New repository secret
+* Velg "Code Spaces" og "New repository secret"
 * Du skal lage to repository secrets med navn: AWS_ACCESS_KEY_ID og AWS_SECRET_ACCESS_KEY
 * Legg inn verdier du fikk oppgitt når du laget nøklene, eller fra filen du lastet ned 
 
