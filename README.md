@@ -2,7 +2,7 @@
 
 * Vi i denne oppgaven bruke AWS-tjenesten **Comprehend** til å analysere **sentiment** i tekst, det vil si om teksten uttrykker en positiv, negativ, nøytral eller blandet stemning.
 * Dette repoet inneholder er ferdiglaget SAM applikasjon. Vi skal senere lage disse selv. 
-* Applikasjonen bygges og deployes med **AWS SAM**, både via GitHub Actions og direkte fra ditt Codespaces-miljø.
+* Applikasjonen bygges og deployes med **AWS SAM**, både via GitHub Actions (Senere) og direkte fra ditt Codespaces-miljø.
 * I denne øvelsen vil vi også se hvordan vi kan bruke **GitHub Actions** til å sette opp en **CI/CD-pipeline** for en AWS Lambda-funksjon.
 
 ## Beskrivelse
