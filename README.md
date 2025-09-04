@@ -126,7 +126,7 @@ curl -X POST $URL -H 'Content-Type: text/plain'  -H 'cache-control: no-cache' -d
 * APIet er ikke veldig brukervennlig. Koden bare sender responsen fra AWS Comprehend videre til klienten.
 * Endre responsen etter eget ønske
   
-## Bonusoppgave: Endre lambdaen til å bruke en annen Comprehend-tjeneste
+## Bonusoppgave: Endre lambdaen til å bruke en annen Comprehend-funkskjon
 
 AWS Comprehend har en lang rekke funksjoner utover sentimentanalyse, se på https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/comprehend.html
 og finn inspirasjon til å endre Lambdafunksjonen så den gjør noe annet en sentimentanalyse.
@@ -135,4 +135,4 @@ Noen muligheter
 
 * Toxic språk
 * Oppdate språk i tekst
-* 
+  
