@@ -120,6 +120,33 @@ export URL=<URL fra "Value" i output >
 curl -X POST $URL -H 'Content-Type: text/plain'  -H 'cache-control: no-cache' -d 'The laptop would not boot up when I got it.'
 ```
 
+## Oppgave: Utforsk Lambda-funksjonen i konsollet
+
+Når dere deployet applikasjonen med **SAM**, ble det opprettet en Lambda-funksjon i AWS.  
+I denne oppgaven skal dere utforske den funksjonen i **AWS Management Console** og gjøre en enkel endring i konfigurasjonen.
+
+1. Finn Lambda-funksjonen som ble opprettet av SAM-deployen.  
+   - Tips: bruk konsollet og let dere frem til riktig ressurs.  
+   - Noter hvilket navn funksjonen har.
+
+2. Undersøk hvilke innstillinger funksjonen har.  
+   - Hvilken runtime er valgt?  
+   - Hva står timeout-verdien til?  
+   - Er det satt miljøvariabler?
+
+3. Endre én innstilling på funksjonen:  
+   - Sett timeout til **60 sekunder**.  
+   - Bekreft at endringen er lagret.
+
+4. Reflekter kort:  
+   - Hvorfor tror dere standard-timeout er lav?  
+   - Når kan det være nyttig å øke timeout?  
+   - Hvilke ulemper kan en høy timeout ha?
+
+Her er målet å bli kjent med Lambda i konsollet og forstå hvordan SAM og AWS Console henger sammen. Ikke alle svar finnes direkte i 
+oppgaveteksten – dere må selv utforske og bruke konsollet aktivt.
+
+
 ## Bonus: Gjør APIet mer brukervennlig
 
 * Se på Python-koden og se hvordan lambda-funksjonen er implementert
