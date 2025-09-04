@@ -128,7 +128,13 @@ curl -X POST $URL -H 'Content-Type: text/plain'  -H 'cache-control: no-cache' -d
 ## Bonusoppgave: Endre lambdaen til å bruke en annen Comprehend-tjeneste
 
 AWS Comprehend har en lang rekke funksjoner utover sentimentanalyse, se på https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/comprehend.html
-og finn inspirasjon til å endre Lambdafunksjonen så den gjør noe annet en sentimentanalyse
+og finn inspirasjon til å endre Lambdafunksjonen så den gjør noe annet en sentimentanalyse.
+
+Noen muligheter
+
+* Toxic språk
+* Oppdate språk i tekst
+
 
 ## Bonusoppgave: GitHub Actions
 
