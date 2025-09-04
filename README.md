@@ -19,8 +19,9 @@ Du må start med å lage en fork av dette repoet til din egen GitHub konto.
 
 ![Alt text](img/fork.png  "a title")
 
-## Lag AWS Credentials 
+## Lag AWS Credentials (Access keys)
 
+* Selv om du har gjort dette tidligere, må du gjøre dette på nytt! 
 * Følg veiledningen her for å lage Access Key og Secret Access Key  - https://github.com/glennbechdevops/aws-iam-accesskeys
 
 ## Sett Access Key & secret  som CodeSpaces/Repository secrets
