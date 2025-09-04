@@ -124,7 +124,7 @@ curl -X POST $URL -H 'Content-Type: text/plain'  -H 'cache-control: no-cache' -d
 
 * Se på Python-koden og se hvordan lambda-funksjonen er implementert
 * APIet er ikke veldig brukervennlig. Koden bare sender responsen fra AWS Comprehend videre til klienten.
-* Endre responsen etter eget ønske
+* Endre responsen etter eget ønske, kanskje en enkel json med format {"Sentiment" :"Negative"} - ved negativt sentiment osv.
   
 ## Bonusoppgave: Endre lambdaen til å bruke en annen Comprehend-funkskjon
 
