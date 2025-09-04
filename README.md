@@ -138,11 +138,6 @@ I denne oppgaven skal dere utforske den funksjonen i **AWS Management Console** 
    - Sett timeout til **60 sekunder**.  
    - Bekreft at endringen er lagret.
 
-4. Reflekter kort:  
-   - Hvorfor tror dere standard-timeout er lav?  
-   - Når kan det være nyttig å øke timeout?  
-   - Hvilke ulemper kan en høy timeout ha?
-
 Her er målet å bli kjent med Lambda i konsollet og forstå hvordan SAM og AWS Console henger sammen. Ikke alle svar finnes direkte i 
 oppgaveteksten – dere må selv utforske og bruke konsollet aktivt.
 
