@@ -147,7 +147,7 @@ I denne delen skal du sette opp **CI/CD med GitHub Actions** slik at hver gang d
 
 ### Opprett workflow-fil
 
-Lag en ny mappe og fil i repoet ditt: `.github/workflows/deploy.yml`
+Lag en ny mappe og fil i ditt workspace: `.github/workflows/deploy.yml`
 
 ```
 name: Deploy SAM Sentiment App
@@ -196,7 +196,7 @@ jobs:
 
 ### Test workflow
 
-*** Commit og push filen deploy.yml til main.
+***Commit & synkroniser ilen deploy.yml**
 
 * Gå til fanen Actions i GitHub-repoet ditt.
 * Se at workflowen kjører. Når den er ferdig, vil du få ut API Gateway URL på samme måte som ved manuell deploy.
