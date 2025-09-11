@@ -199,16 +199,15 @@ jobs:
 
 ### Test workflow
 
-***Commit & synkroniser ilen deploy.yml**
+***Commit & synkroniserfilen deploy.yml** (Git push)
 
 * Gå til fanen Actions i GitHub-repoet ditt.
 * Se at workflowen kjører. Når den er ferdig, vil du få ut API Gateway URL på samme måte som ved manuell deploy.
 * Gå til AWS console, tjenesten "Lambda" og se at funksjonen din er deployet
 
+### Legg inn sjekk for kvalitet (lint, validering og tester)
 
-###  Kvalitet (lint, validering, tester)
-
-Ved hjelp av dokumentasjon eller andre verktøy- gjør følgende. 
+Ved hjelp av dokumentasjon eller andre verktøy (Gjerne bruk AI) - gjør følgende. 
 
 * Legg inn sam validate og cfn-lint på template.yaml.
 * Kjør pytest for Lambda (skriv minst 2–3 tester som mocker Comprehend-kallet). 
