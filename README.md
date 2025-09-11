@@ -17,8 +17,6 @@ I øvelsen bruker vi fire sentrale AWS-tjenester:
 
 Du må start med å lage en fork av dette repoet til din egen GitHub konto.
 
-![Alt text](img/fork.png  "a title")
-
 ## Lag AWS Credentials (Access keys)
 
 * Selv om du har gjort dette tidligere, må du gjøre dette på nytt! 
