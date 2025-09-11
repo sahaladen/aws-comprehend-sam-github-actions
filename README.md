@@ -22,7 +22,7 @@ Du må start med å lage en fork av dette repoet til din egen GitHub konto.
 * Hvis du har laget og tatt vare på access keys fra tidligere, kan du benytte disse. Hvis ikke må du lage nye .
 * Følg veiledningen her for å lage Access Key og Secret Access Key  - https://github.com/glennbechdevops/aws-iam-accesskeys
 
-## Sett Access Key & secret  som CodeSpaces/Repository secrets
+## Sett Access Key & secret  som CodeSpaces/Action secrets
 
 <img width="2652" height="1186" alt="image" src="https://github.com/user-attachments/assets/e5eb3cc1-8310-4515-b0f8-54acbd6b2db9" />
 
@@ -30,8 +30,7 @@ Du må start med å lage en fork av dette repoet til din egen GitHub konto.
 * Velg "Code Spaces" og "New repository secret"
 * Du skal lage to repository secrets med navn: AWS_ACCESS_KEY_ID og AWS_SECRET_ACCESS_KEY
 * Legg inn verdier du fikk oppgitt når du laget nøklene, eller fra filen du lastet ned 
-
-**Legg inn de samme repo-hemmelighetene under "Secrets and Variables" / Actions** 
+* Legg inn de samme repo-hemmelighetene under "Secrets and Variables" / Actions 
 
 ## Start et Codespace & Installer nødvendig programvare 
 * Fra din fork av dette repositoryet, starter du CodeSpaces. Keyboard shortcut er "."
