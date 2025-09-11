@@ -92,7 +92,29 @@ REPORT RequestId: d37e4849-b175-4fa6-aa4b-0031af6f41a0  Init Duration: 0.42 ms  
 * Ta en ekstra kikk på event.json. Dette er objektet AWS Lambda får av tjenesten API Gateway .
 * Forsøke å endre teksten i "Body" delen av event.json - klarer å å endre sentimentet til positivt ?
   
-## Deploy med SAM fra CodeSpaces
+
+## Oppgave: Utforsk Lambda-funksjonen i konsollet
+
+Når dere deployet applikasjonen med **SAM**, ble det opprettet en Lambda-funksjon i AWS.  
+I denne oppgaven skal dere utforske den funksjonen i **AWS Management Console** og gjøre en enkel endring i konfigurasjonen.
+
+1. Finn Lambda-funksjonen som ble opprettet av SAM-deployen.  
+   - Tips: bruk konsollet og let dere frem til riktig ressurs.  
+   - Noter hvilket navn funksjonen har.
+
+2. Undersøk hvilke innstillinger funksjonen har.  
+   - Hvilken runtime er valgt?  
+   - Hva står timeout-verdien til?  
+   - Er det satt miljøvariabler?
+
+3. Endre én innstilling på funksjonen:  
+   - Sett timeout til **60 sekunder**.  
+   - Bekreft at endringen er lagret.
+
+Her er målet å bli kjent med Lambda i konsollet og forstå hvordan SAM og AWS Console henger sammen. Ikke alle svar finnes direkte i 
+oppgaveteksten – dere må selv utforske og bruke konsollet aktivt.
+
+## Del #1 - Deploy med SAM fra CodeSpaces
 
 * Du kan også bruke SAM til å deploye lambdafunksjonen rett fra CodeSpaces 
 * NB! Du må endre Stack name til noe unikt. Legg på ditt navn, for eksempel; ```--stack-name sam-sentiment-ola```
@@ -120,27 +142,83 @@ export URL=<URL fra "Value" i output >
 curl -X POST $URL -H 'Content-Type: text/plain'  -H 'cache-control: no-cache' -d 'The laptop would not boot up when I got it.'
 ```
 
-## Oppgave: Utforsk Lambda-funksjonen i konsollet
+## Del 2 - Lag en GitHub Actions workflow som deployer lambdafunksjonen 
 
-Når dere deployet applikasjonen med **SAM**, ble det opprettet en Lambda-funksjon i AWS.  
-I denne oppgaven skal dere utforske den funksjonen i **AWS Management Console** og gjøre en enkel endring i konfigurasjonen.
+I denne delen skal du sette opp **CI/CD med GitHub Actions** slik at hver gang du gjør en endring og pusher til `main`, blir SAM-applikasjonen automatisk bygd og deployet til AWS.
 
-1. Finn Lambda-funksjonen som ble opprettet av SAM-deployen.  
-   - Tips: bruk konsollet og let dere frem til riktig ressurs.  
-   - Noter hvilket navn funksjonen har.
+### Opprett workflow-fil
 
-2. Undersøk hvilke innstillinger funksjonen har.  
-   - Hvilken runtime er valgt?  
-   - Hva står timeout-verdien til?  
-   - Er det satt miljøvariabler?
+Lag en ny mappe og fil i repoet ditt: `.github/workflows/deploy.yml`
 
-3. Endre én innstilling på funksjonen:  
-   - Sett timeout til **60 sekunder**.  
-   - Bekreft at endringen er lagret.
+```
+name: Deploy SAM Sentiment App
 
-Her er målet å bli kjent med Lambda i konsollet og forstå hvordan SAM og AWS Console henger sammen. Ikke alle svar finnes direkte i 
-oppgaveteksten – dere må selv utforske og bruke konsollet aktivt.
+on:
+  push:
+    branches:
+      - main
 
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Sjekk ut repo
+        uses: actions/checkout@v4
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Installer AWS CLI v2
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+
+      - name: Installer AWS SAM CLI
+        run: |
+          wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
+          unzip aws-sam-cli-linux-x86_64.zip -d sam-installation
+          sudo ./sam-installation/install
+
+      - name: Konfigurer AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+      - name: Bygg SAM app
+        run: sam build --use-container --template-file sentiment-demo/template.yaml
+
+      - name: Deploy SAM app
+        run: |
+          sam deploy \
+            --no-confirm-changeset \
+            --no-fail-on-empty-changeset \
+            --stack-name sam-sentiment-${{ github.actor }} \
+            --resolve-s3 \
+            --capabilities CAPABILITY_IAM \
+            --region eu-west-1
+```
+
+**Forklaring av workflowen**
+
+* on: push to main → Workflow kjører når du pusher til main.
+* aws-actions/configure-aws-credentials → Leser inn de hemmelige nøklene du lagde i steg 1 (Secrets).
+* sam build → Bygger Lambdaen og pakker koden.
+* sam deploy → Ruller ut endringer til AWS automatisk.
+* Stack-navnet inkluderer github.actor (ditt GitHub brukernavn) for å gjøre det unikt.
+
+### Test workflow
+
+*** Commit og push filen deploy.yml til main.
+
+* Gå til fanen Actions i GitHub-repoet ditt.
+* Se at workflowen kjører. Når den er ferdig, vil du få ut API Gateway URL på samme måte som ved manuell deploy.
+* Gå til AWS console, tjenesten "Lambda" og se at funksjonen din er deployet
 
 ## Bonus: Gjør APIet mer brukervennlig
 
