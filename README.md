@@ -15,11 +15,11 @@ I øvelsen bruker vi fire sentrale AWS-tjenester:
 
 ## Lag en fork
 
-Du må start med å lage en fork av dette repoet til din egen GitHub konto.
+Du må start med å lage en fork av dette repoet til din egen GitHub konto. 
 
 ## Lag AWS Credentials (Access keys)
 
-* Selv om du har gjort dette tidligere, må du gjøre dette på nytt! 
+* Hvis du har laget og tatt vare på access keys fra tidligere, kan du benytte disse. Hvis ikke må du lage nye .
 * Følg veiledningen her for å lage Access Key og Secret Access Key  - https://github.com/glennbechdevops/aws-iam-accesskeys
 
 ## Sett Access Key & secret  som CodeSpaces/Repository secrets
