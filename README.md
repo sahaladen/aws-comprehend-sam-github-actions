@@ -218,6 +218,14 @@ jobs:
 * Se at workflowen kjører. Når den er ferdig, vil du få ut API Gateway URL på samme måte som ved manuell deploy.
 * Gå til AWS console, tjenesten "Lambda" og se at funksjonen din er deployet
 
+
+###  Kvalitet (lint, validering, tester)
+
+Ved hjelp av dokumentasjon eller andre verktøy- gjør følgende. 
+
+* Legg inn sam validate og cfn-lint på template.yaml.
+* Kjør pytest for Lambda (skriv minst 2–3 tester som mocker Comprehend-kallet). 
+
 ## Bonus: Gjør APIet mer brukervennlig
 
 * Se på Python-koden og se hvordan lambda-funksjonen er implementert
