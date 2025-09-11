@@ -19,18 +19,21 @@ Du må start med å lage en fork av dette repoet til din egen GitHub konto.
 
 ## Lag AWS Credentials (Access keys)
 
-* Hvis du har laget og tatt vare på access keys fra tidligere, kan du benytte disse. Hvis ikke må du lage nye .
+* Hvis du har laget og tatt vare på access keys fra tidligere, kan du benytte disse. Hvis ikke må du lage nye.
 * Følg veiledningen her for å lage Access Key og Secret Access Key  - https://github.com/glennbechdevops/aws-iam-accesskeys
 
-## Sett Access Key & secret  som CodeSpaces/Action secrets
+## Sett Access Key & secret som CodeSpaces secret
 
 <img width="2652" height="1186" alt="image" src="https://github.com/user-attachments/assets/e5eb3cc1-8310-4515-b0f8-54acbd6b2db9" />
 
 * I din fork, velg "settings" og "Secrets and Variables"
 * Velg "Code Spaces" og "New repository secret"
 * Du skal lage to repository secrets med navn: AWS_ACCESS_KEY_ID og AWS_SECRET_ACCESS_KEY
-* Legg inn verdier du fikk oppgitt når du laget nøklene, eller fra filen du lastet ned 
-* Legg inn de samme repo-hemmelighetene under "Secrets and Variables" / Actions 
+* Legg inn verdier du fikk oppgitt når du laget nøklene, eller fra filen du lastet ned
+
+## Sett Access Key & secret som Action secret
+
+* Legg inn de samme repo-hemmelighetene under "Secrets and Variables" og  *Actions* 
 
 ## Start et Codespace & Installer nødvendig programvare 
 * Fra din fork av dette repositoryet, starter du CodeSpaces. Keyboard shortcut er "."
@@ -147,7 +150,7 @@ I denne delen skal du sette opp **CI/CD med GitHub Actions** slik at hver gang d
 
 ### Opprett workflow-fil
 
-Lag en ny mappe og fil i ditt workspace: `.github/workflows/deploy.yml`
+Lag en ny fil i ditt med følgende filnavn: `.github/workflows/deploy.yml` - pass på punktum i github, og .yml som suffix for vilnavn!
 
 ```
 name: Deploy SAM Sentiment App
