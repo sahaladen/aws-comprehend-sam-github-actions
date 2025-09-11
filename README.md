@@ -114,7 +114,7 @@ I denne oppgaven skal dere utforske den funksjonen i **AWS Management Console** 
 Her er målet å bli kjent med Lambda i konsollet og forstå hvordan SAM og AWS Console henger sammen. Ikke alle svar finnes direkte i 
 oppgaveteksten – dere må selv utforske og bruke konsollet aktivt.
 
-## Del #1 - Deploy med SAM fra CodeSpaces
+## Del 1 - Deploy med SAM fra CodeSpaces
 
 * Du kan også bruke SAM til å deploye lambdafunksjonen rett fra CodeSpaces 
 * NB! Du må endre Stack name til noe unikt. Legg på ditt navn, for eksempel; ```--stack-name sam-sentiment-ola```
