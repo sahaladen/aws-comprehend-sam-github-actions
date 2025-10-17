@@ -20,7 +20,12 @@ def handler(event, context):
         "headers": {
             "Content-Type": "application/json"
         },
-        "body": json.dumps({
-            "sentiment ": json.dumps(response)
-        })
+        "body": json.dumps(
+            {
+                "message": "Toxic content analysis result:",
+                "input_text": body,
+                "detection_result": response
+            },
+            indent=4
+        )
     }
