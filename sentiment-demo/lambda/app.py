@@ -7,27 +7,18 @@ def handler(event, context):
     body = event["body"]
 
     # Detect sentiment
-    sentiment_response = client.detect_sentiment(LanguageCode="en", Text=body)
+    sentiment = client.detect_sentiment(LanguageCode="en", Text=body)
 
-    # Detect toxic content
-    toxic_response = client.detect_toxic_content(
-        TextSegments=[{'Text': body}],
-        LanguageCode='en'
-    )
-
-    # Extract relevant data
-    toxic_results = toxic_response.get('ResultList', [])
-
+    # Extract only the relevant parts (NOT the entire response)
     formatted_result = {
-        "message": "Content analysis result",
+        "message": "Sentiment analysis result",
         "input_text": body,
-        "sentiment": {
-            "overall": sentiment_response['Sentiment'],
-            "scores": sentiment_response['SentimentScore']
-        },
-        "toxicity": {
-            "labels": toxic_results[0].get('Labels', []) if toxic_results else [],
-            "toxicity_score": toxic_results[0].get('Toxicity', None) if toxic_results else None
+        "sentiment": sentiment['Sentiment'],  # Just the sentiment value
+        "scores": {
+            "positive": sentiment['SentimentScore']['Positive'],
+            "negative": sentiment['SentimentScore']['Negative'],
+            "neutral": sentiment['SentimentScore']['Neutral'],
+            "mixed": sentiment['SentimentScore']['Mixed']
         }
     }
 
@@ -36,5 +27,5 @@ def handler(event, context):
         "headers": {
             "Content-Type": "application/json"
         },
-        "body": json.dumps(formatted_result, indent=2)
+        "body": json.dumps(formatted_result, indent=2)  # Only call json.dumps ONCE
     }
